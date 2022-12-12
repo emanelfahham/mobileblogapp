@@ -1,0 +1,21 @@
+import createDataContext from "./createDataContext";
+
+const blogPostReducer = (state, action) =>{
+    switch (action.type) {
+        case 'add_blogPost':
+            return [...state, {title: `My Blog Post #${state.length + 1}`}]    
+        default:
+            return state;
+    }
+}
+const addBlogPost = (dispatch) => {
+    return () =>{
+        dispatch({type: 'add_blogPost'});
+    }    
+}
+
+    export const {Context, Provider} = createDataContext(
+        blogPostReducer,       //context provider//
+        {addBlogPost},         //actions//      
+        []                     //inital state//
+    )
