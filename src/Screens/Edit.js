@@ -14,7 +14,7 @@ const EditScreen = ({route, navigation}) => {
                 initialValue={{title: blogPost.title, content: blogPost.content}}
                 onSubmit={(title, content)=>{
                     editBlogPost(id, title, content);
-                    navigation.goBack()
+                    navigation.pop();
                 }}
             />
         </View>
