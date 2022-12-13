@@ -2,14 +2,14 @@ import React from "react";
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 
-const BlogPostItem = ({title, onPress}) => {
+const BlogPostItem = ({title, deletePress, detailsBtn}) => {
     return(
-        <View style={styles.row}>
+        <TouchableOpacity onPress={detailsBtn} style={styles.row}>
             <Text style={styles.text}>{title}</Text>
-            <TouchableOpacity onPress={onPress}>
+            <TouchableOpacity onPress={deletePress}>
                 <AntIcon name='delete' color={'tomato'} size={30}/>
             </TouchableOpacity>
-        </View>
+        </TouchableOpacity>
     )
 }
 
