@@ -1,21 +1,33 @@
-import React, {useContext} from "react";
-import {FlatList, StyleSheet, View, Button} from 'react-native';
+import React, {useContext, useEffect} from "react";
+import {FlatList, StyleSheet, View, TouchableOpacity} from 'react-native';
+import Feather from 'react-native-vector-icons/Feather';
 import { Context } from "../Context/BlogContext";
 import BlogPostItem from "../Components/BlogPostItem";
 
-const IndexScreen = () => {
-    const {state, addBlogPost, deleteBlogPost} = useContext(Context);
+const IndexScreen = ({navigation}) => {
+    const {state, deleteBlogPost} = useContext(Context);
+    useEffect(() => {
+    navigation.setOptions({
+      headerRight: () => (
+         <TouchableOpacity onPress={() => navigation.navigate('Create')}>
+        <Feather name="plus" size={30} />
+      </TouchableOpacity>
+      ),
+    });
+  }, [navigation]);
     return(
         <View style={styles.card}>
-            <Button title='Add Post' onPress={addBlogPost} />
             <FlatList
                 data={state}
                 keyExtractor={blogPost => blogPost.id}
                 renderItem={({item})=>{
                     return(
-                        <BlogPostItem 
+                        <BlogPostItem
+                            detailsBtn={()=>navigation.navigate('Show',{
+                                id:item.id
+                            })} 
                             title={item.title}
-                            onPress={()=> deleteBlogPost(item.id)}
+                            deletePress={()=> deleteBlogPost(item.id)}
                         />
                     )
                 }}
@@ -24,11 +36,12 @@ const IndexScreen = () => {
         </View>
     )
 }
+
 const styles = StyleSheet.create({
     card:{
         backgroundColor:'#fff',
         flex:1,
-        paddingTop:16
+        padding:16
     }
 })
 
